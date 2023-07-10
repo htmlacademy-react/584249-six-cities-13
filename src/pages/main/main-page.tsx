@@ -95,6 +95,7 @@ function MainPage({offersNumber}: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
+                <span>{offersNumber}</span>
                 <OfferCard />
                 <OfferCard />
                 <OfferCard />
