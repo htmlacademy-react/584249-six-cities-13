@@ -84,7 +84,7 @@ function MainPage({offersNumber}: MainPageProps): JSX.Element {
                 <span className="places__sorting-type">
                   Popular
                   <svg className="places__sorting-arrow" width="7" height="4">
-                    {/* <use xlink:href="#icon-arrow-select"></use> */}
+                    <use xlinkHref="#icon-arrow-select" />
                   </svg>
                 </span>
                 <ul className="places__options places__options--custom">
