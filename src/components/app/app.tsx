@@ -7,12 +7,14 @@ import PrivateRoute from '../../components/private-route/private-route';
 import LoginPage from '../../pages/login/login-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import OfferPage from '../../pages/offer/offer-page';
+import {TypeOfferPage} from '../../types/offer';
 
 type AppMainProps = {
   offersCount: number;
+  offers: TypeOfferPage[];
 }
 
-function App({offersCount}: AppMainProps): JSX.Element {
+function App({offersCount, offers}: AppMainProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
