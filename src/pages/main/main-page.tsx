@@ -1,12 +1,14 @@
 import OffersList from '../../components/offers/offers-list';
 import Header from '../../components/header/header';
 import LocationsList from '../../components/locations/locations-list';
+import { TypeOfferPage } from '../../types/offer';
 
 type MainPageProps = {
   offersNumber: number;
+  offers: TypeOfferPage[];
 }
 
-function MainPage({offersNumber}: MainPageProps): JSX.Element {
+function MainPage({offersNumber, offers}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -36,7 +38,10 @@ function MainPage({offersNumber}: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OffersList offersNumber={offersNumber} />
+              <OffersList
+                offersNumber={offersNumber}
+                offers={offers}
+              />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
