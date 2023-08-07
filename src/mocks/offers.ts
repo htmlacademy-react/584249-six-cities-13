@@ -37,7 +37,7 @@ export const Offers: TypeOfferPage[] = [
       isPro: true
     },
     images: [
-      'img/rooms.jpg',
+      'img/room.jpg',
       'img/apartment-01.jpg',
       'img/apartment-02.jpg',
       'img/apartment-03.jpg',
@@ -114,7 +114,7 @@ export const Offers: TypeOfferPage[] = [
     },
     images: [
       'img/apartment-02.jpg',
-      'img/rooms.jpg',
+      'img/room.jpg',
       'img/studio-02.jpg',
     ],
     maxAdults: 1
@@ -157,12 +157,106 @@ export const Offers: TypeOfferPage[] = [
       isPro: true
     },
     images: [
-      'img/rooms.jpg',
+      'img/room.jpg',
       'img/apartment-01.jpg',
       'img/apartment-02.jpg',
       'img/apartment-03.jpg',
       'img/studio-02.jpg',
-      'img/rooms.jpg',
+      'img/room.jpg',
+    ],
+    maxAdults: 6
+  },
+  {
+    id: '6af6f711-c28d-4121-82cd-e0b462a27f04',
+    title: 'Beautiful & luxurious studio at great location',
+    type: 'apartment',
+    price: 180,
+    city: {
+      name: 'Hamburg',
+      location: {
+        latitude: 52.35514938496378,
+        longitude: 4.673877537499948,
+        zoom: 8
+      }
+    },
+    isFavorite: true,
+    isPremium: true,
+    rating: 5,
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    bedrooms: 4,
+    goods: [
+      'Heating',
+      'Wi-Fi',
+      'Kitchen',
+      'Fridge',
+      'Washing machine',
+      'Coffee machine',
+      'Dishwasher',
+      'Towels',
+      'Baby seat',
+      'Cabel TV',
+      'Parking',
+      'Room service'
+    ],
+    host: {
+      name: 'Angelina Conner',
+      avatarUrl: 'img/avatar-angelina.jpg',
+      isPro: true
+    },
+    images: [
+      'img/room.jpg',
+      'img/apartment-01.jpg',
+      'img/apartment-02.jpg',
+      'img/apartment-03.jpg',
+      'img/studio-02.jpg',
+      'img/room.jpg',
+    ],
+    maxAdults: 6
+  },
+  {
+    id: '6af6f711-c28d-4121-82cd-e0b462a27f05',
+    title: 'Beautiful & luxurious studio at great location',
+    type: 'apartment',
+    price: 180,
+    city: {
+      name: 'Hamburg',
+      location: {
+        latitude: 52.35514938496378,
+        longitude: 4.673877537499948,
+        zoom: 8
+      }
+    },
+    isFavorite: true,
+    isPremium: true,
+    rating: 5,
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    bedrooms: 4,
+    goods: [
+      'Heating',
+      'Wi-Fi',
+      'Kitchen',
+      'Fridge',
+      'Washing machine',
+      'Coffee machine',
+      'Dishwasher',
+      'Towels',
+      'Baby seat',
+      'Cabel TV',
+      'Parking',
+      'Room service'
+    ],
+    host: {
+      name: 'Angelina Conner',
+      avatarUrl: 'img/avatar-angelina.jpg',
+      isPro: true
+    },
+    images: [
+      'img/room.jpg',
+      'img/apartment-01.jpg',
+      'img/apartment-02.jpg',
+      'img/apartment-03.jpg',
+      'img/studio-02.jpg',
+      'img/room.jpg',
     ],
     maxAdults: 6
   }
