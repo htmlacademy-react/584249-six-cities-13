@@ -1,20 +1,24 @@
+import { generatePath, Link } from 'react-router-dom';
 import { TypeOfferPage } from '../../types/offer';
+import { AppRoutes } from '../../const';
 
 type OfferCardProps = {
   oneOffer: TypeOfferPage;
+  onMouseOver: (activeOffer: string) => void;
 }
 
-function OfferCard({oneOffer}: OfferCardProps): JSX.Element {
+function OfferCard({oneOffer, onMouseOver}: OfferCardProps): JSX.Element {
+
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card" onMouseOver={() => onMouseOver(oneOffer.id)}>
       {oneOffer.isPremium &&
       <div className="place-card__mark">
         <span>Premium</span>
       </div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={generatePath(AppRoutes.Offer, {id: `${oneOffer.id}` })}>
           <img className="place-card__image" src={oneOffer.images[0]} width="260" height="200" alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -36,7 +40,7 @@ function OfferCard({oneOffer}: OfferCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{oneOffer.title}</a>
+          <Link to={generatePath(AppRoutes.Offer, {id: `${oneOffer.id}` })}>{oneOffer.title}</Link>
         </h2>
         <p className="place-card__type">{oneOffer.type}</p>
       </div>
