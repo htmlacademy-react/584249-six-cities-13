@@ -41,7 +41,7 @@ export const Offers: TypeOfferPage[] = [
       'img/apartment-01.jpg',
       'img/apartment-02.jpg',
       'img/apartment-03.jpg',
-      'img/studio-02.jpg',
+      'img/studio-01.jpg',
     ],
     maxAdults: 4
   },
@@ -80,7 +80,7 @@ export const Offers: TypeOfferPage[] = [
     images: [
       'img/apartment-02.jpg',
       'img/apartment-03.jpg',
-      'img/studio-02.jpg',
+      'img/studio-01.jpg',
     ],
     maxAdults: 2
   },
@@ -115,7 +115,7 @@ export const Offers: TypeOfferPage[] = [
     images: [
       'img/apartment-02.jpg',
       'img/room.jpg',
-      'img/studio-02.jpg',
+      'img/studio-01.jpg',
     ],
     maxAdults: 1
   },
@@ -161,7 +161,7 @@ export const Offers: TypeOfferPage[] = [
       'img/apartment-01.jpg',
       'img/apartment-02.jpg',
       'img/apartment-03.jpg',
-      'img/studio-02.jpg',
+      'img/studio-01.jpg',
       'img/room.jpg',
     ],
     maxAdults: 6
@@ -208,7 +208,7 @@ export const Offers: TypeOfferPage[] = [
       'img/apartment-01.jpg',
       'img/apartment-02.jpg',
       'img/apartment-03.jpg',
-      'img/studio-02.jpg',
+      'img/studio-01.jpg',
       'img/room.jpg',
     ],
     maxAdults: 6
@@ -255,7 +255,7 @@ export const Offers: TypeOfferPage[] = [
       'img/apartment-01.jpg',
       'img/apartment-02.jpg',
       'img/apartment-03.jpg',
-      'img/studio-02.jpg',
+      'img/studio-01.jpg',
       'img/room.jpg',
     ],
     maxAdults: 6
