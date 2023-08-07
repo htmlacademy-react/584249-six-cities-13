@@ -1,4 +1,4 @@
-import OfferCard from '../../components/offers/offer-card';
+import OffersList from '../../components/offers/offers-list';
 import Header from '../../components/header/header';
 import LocationsList from '../../components/locations/locations-list';
 
@@ -36,11 +36,7 @@ function MainPage({offersNumber}: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {Array.from({ length: offersNumber }, (_, index) => (
-                  <OfferCard key={index} />
-                ))}
-              </div>
+              <OffersList offersNumber={offersNumber} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
