@@ -1,18 +1,20 @@
 import OfferCard from '../../components/offers/offer-card';
-import { Offers } from '../../mocks/offers';
+import { TypeOfferPage } from '../../types/offer';
+import { useState } from 'react';
 
 type OffersListProps = {
-  offersNumber: number;
+  offersNumber?: number;
+  offers: TypeOfferPage[];
+  classN?: string;
 }
 
 
-function OffersList({offersNumber}: OffersListProps): JSX.Element {
-
-  const limitedOffers = Offers.slice(0, offersNumber);
+function OffersList({offersNumber, offers, classN, }: OffersListProps): JSX.Element {
+  const [, setActiveState] = useState<string | ''>('');
 
   return (
-    <div className="cities__places-list places__list tabs__content">
-      {limitedOffers.map((offer) => <OfferCard key={offer.id} oneOffer={offer} />)}
+    <div className={classN ? '' : 'cities__places-list places__list tabs__content'}>
+      {offers.slice(0, offersNumber).map((offer) => <OfferCard key={offer.id} oneOffer={offer} onMouseOver={setActiveState} />)}
     </div>
   );
 }
