@@ -5,7 +5,7 @@ export const Settings = {
 export enum AppRoutes {
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offer',
+  Offer = '/offer/:id',
   Root = '/'
 }
 
