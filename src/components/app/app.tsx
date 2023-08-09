@@ -7,18 +7,20 @@ import PrivateRoute from '../../components/private-route/private-route';
 import LoginPage from '../../pages/login/login-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import OfferPage from '../../pages/offer/offer-page';
+import {TypeOfferPage} from '../../types/offer';
 
 type AppMainProps = {
   offersCount: number;
+  offers: TypeOfferPage[];
 }
 
-function App({offersCount}: AppMainProps): JSX.Element {
+function App({offersCount, offers}: AppMainProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoutes.Root}
-          element={<MainPage offersNumber={offersCount} />}
+          element={<MainPage offersNumber={offersCount} offers={offers}/>}
         />
         <Route
           path={AppRoutes.Login}
@@ -28,15 +30,15 @@ function App({offersCount}: AppMainProps): JSX.Element {
           path={AppRoutes.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={AuthorizationStatus.Auth}
             >
-              <FavoritesPage />
+              <FavoritesPage offers={offers} />
             </PrivateRoute>
           }
         />
         <Route
-          path="/offer/:id"
-          element={<OfferPage />}
+          path={AppRoutes.Offer}
+          element={<OfferPage offers={offers}/>}
         />
         <Route
           path="*"
