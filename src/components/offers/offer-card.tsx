@@ -4,13 +4,18 @@ import { AppRoutes } from '../../const';
 
 type OfferCardProps = {
   oneOffer: TypeOfferPage;
-  onMouseOver: (activeOffer: string) => void;
+  // onMouseOver: (activeOffer: string) => void;
+  onCardHover?: (offerId: string | null) => void;
 }
 
-function OfferCard({oneOffer, onMouseOver}: OfferCardProps): JSX.Element {
+function OfferCard({oneOffer, onCardHover}: OfferCardProps): JSX.Element {
 
   return (
-    <article className="cities__card place-card" onMouseOver={() => onMouseOver(oneOffer.id)}>
+    <article
+      className="cities__card place-card"
+      onMouseOver={() => onCardHover?.(oneOffer.id)}
+      onMouseOut={() => onCardHover?.(null)}
+    >
       {oneOffer.isPremium &&
       <div className="place-card__mark">
         <span>Premium</span>
