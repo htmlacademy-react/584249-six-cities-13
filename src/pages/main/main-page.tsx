@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import OffersList from '../../components/offers/offers-list';
 import Header from '../../components/header/header';
 import LocationsList from '../../components/locations/locations-list';
+import Map from '../../components/map/map';
 import { TypeOfferPage } from '../../types/offer';
 
 type MainPageProps = {
@@ -9,6 +11,12 @@ type MainPageProps = {
 }
 
 function MainPage({offersNumber, offers}: MainPageProps): JSX.Element {
+  const [selectedOffer, setSelectedOfferId] = useState<string | null>(null);
+
+  const onCardHover = (offerId: string | null): void => {
+    setSelectedOfferId(offerId);
+  };
+
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -41,10 +49,16 @@ function MainPage({offersNumber, offers}: MainPageProps): JSX.Element {
               <OffersList
                 offersNumber={offersNumber}
                 offers={offers}
+                onCardHover={onCardHover}
               />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map
+                className="cities"
+                city={offers[0].city.location}
+                offers={offers}
+                selectedOfferId={selectedOffer}
+              />
             </div>
           </div>
         </div>

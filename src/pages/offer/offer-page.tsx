@@ -2,6 +2,7 @@ import { TypeOfferPage } from '../../types/offer';
 import { useParams } from 'react-router';
 import Header from '../../components/header/header';
 import ReviewForm from '../../components/offers/review-form';
+import Map from '../../components/map/map';
 
 type OfferPageProps = {
   offers: TypeOfferPage[];
@@ -122,7 +123,7 @@ function OfferPage({offers}: OfferPageProps):JSX.Element {
               </section>
             </div>
           </div>}
-          <section className="offer__map map"></section>
+          <Map className="offer__map map" city={offers[0].city.location} offers={offers} />
         </section>
         <div className="container">
           <section className="near-places places">
