@@ -10,7 +10,7 @@ export const Offers: TypeOfferPage[] = [
       name: 'Amsterdam',
       location: {
         latitude: 52.3909553943508,
-        longitude: 4.85309666406198,
+        longitude: 4.81309666406164,
         zoom: 10
       }
     },
@@ -32,6 +32,7 @@ export const Offers: TypeOfferPage[] = [
       'Cabel TV'
     ],
     host: {
+      id: 10,
       name: 'Angelina Conner',
       avatarUrl: 'img/avatar-angelina.jpg',
       isPro: true
@@ -73,6 +74,7 @@ export const Offers: TypeOfferPage[] = [
       'Cabel TV'
     ],
     host: {
+      id: 12,
       name: 'Oliver Conner',
       avatarUrl: 'img/avatar-max.jpg',
       isPro: false
@@ -92,7 +94,7 @@ export const Offers: TypeOfferPage[] = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.3909553943508,
+        latitude: 52.3909553943518,
         longitude: 4.929309666406198,
         zoom: 10
       }
@@ -108,6 +110,7 @@ export const Offers: TypeOfferPage[] = [
       'Towels',
     ],
     host: {
+      id: 13,
       name: 'Oliver Conner',
       avatarUrl: 'img/avatar-max.jpg',
       isPro: true
@@ -152,6 +155,7 @@ export const Offers: TypeOfferPage[] = [
       'Room service'
     ],
     host: {
+      id: 14,
       name: 'Angelina Conner',
       avatarUrl: 'img/avatar-angelina.jpg',
       isPro: true
@@ -199,6 +203,7 @@ export const Offers: TypeOfferPage[] = [
       'Room service'
     ],
     host: {
+      id: 15,
       name: 'Angelina Conner',
       avatarUrl: 'img/avatar-angelina.jpg',
       isPro: true
@@ -246,6 +251,7 @@ export const Offers: TypeOfferPage[] = [
       'Room service'
     ],
     host: {
+      id: 16,
       name: 'Angelina Conner',
       avatarUrl: 'img/avatar-angelina.jpg',
       isPro: true

@@ -19,6 +19,7 @@ export type TypeOfferPage = OfferCard & {
 }
 
 export type Host = {
+  id: number;
   name: string;
   avatarUrl: string;
   isPro: boolean;

@@ -8,13 +8,16 @@ import LoginPage from '../../pages/login/login-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import OfferPage from '../../pages/offer/offer-page';
 import {TypeOfferPage} from '../../types/offer';
+import {Review} from '../../types/review';
 
 type AppMainProps = {
   offersCount: number;
   offers: TypeOfferPage[];
+  reviews: Review[];
+  nearPlaces: TypeOfferPage[];
 }
 
-function App({offersCount, offers}: AppMainProps): JSX.Element {
+function App({offersCount, offers, reviews, nearPlaces}: AppMainProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -38,7 +41,7 @@ function App({offersCount, offers}: AppMainProps): JSX.Element {
         />
         <Route
           path={AppRoutes.Offer}
-          element={<OfferPage offers={offers}/>}
+          element={<OfferPage offers={offers} reviews={reviews} nearPlaces={nearPlaces} />}
         />
         <Route
           path="*"
