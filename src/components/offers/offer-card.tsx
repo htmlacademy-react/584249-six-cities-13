@@ -2,19 +2,23 @@ import { generatePath, Link } from 'react-router-dom';
 import { TypeOfferPage } from '../../types/offer';
 import { AppRoutes } from '../../const';
 
+import { useAppDispatch } from '../../hooks';
+import { selectOffer } from '../../store/action';
+
+import cn from 'classnames';
+
 type OfferCardProps = {
   oneOffer: TypeOfferPage;
-  // onMouseOver: (activeOffer: string) => void;
-  onCardHover?: (offerId: string | null) => void;
 }
 
-function OfferCard({oneOffer, onCardHover}: OfferCardProps): JSX.Element {
+function OfferCard({oneOffer}: OfferCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
 
   return (
     <article
       className="cities__card place-card"
-      onMouseOver={() => onCardHover?.(oneOffer.id)}
-      onMouseOut={() => onCardHover?.(null)}
+      onMouseOver={() => dispatch(selectOffer(oneOffer.id))}
+      onMouseOut={() => dispatch(selectOffer(''))}
     >
       {oneOffer.isPremium &&
       <div className="place-card__mark">
@@ -31,7 +35,7 @@ function OfferCard({oneOffer, onCardHover}: OfferCardProps): JSX.Element {
             <b className="place-card__price-value">&euro; {oneOffer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button className={cn('place-card__bookmark-button button', 'place-card__bookmark-button--active' && oneOffer.isFavorite)} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark" />
             </svg>
