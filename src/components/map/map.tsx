@@ -8,7 +8,7 @@ type MapProps = {
   className: string;
   city: Location;
   offers: TypeOfferPage[];
-  selectedOfferId?: string | null;
+  selectedOfferId: string;
 }
 
 const defaultCustomIcon = new Icon({
