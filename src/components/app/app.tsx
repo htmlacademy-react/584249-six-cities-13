@@ -7,6 +7,7 @@ import PrivateRoute from '../../components/private-route/private-route';
 import LoginPage from '../../pages/login/login-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import OfferPage from '../../pages/offer/offer-page';
+import LoadingScreen from '../../pages/loading/loading';
 import { TypeOfferPage } from '../../types/offer';
 import { Review } from '../../types/review';
 import { useAppSelector } from '../../hooks';
@@ -18,6 +19,14 @@ type AppMainProps = {
 
 function App({reviews, nearPlaces}: AppMainProps): JSX.Element {
   const offers = useAppSelector((state) => state.Offers);
+
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+
+  if (isOffersDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <BrowserRouter>

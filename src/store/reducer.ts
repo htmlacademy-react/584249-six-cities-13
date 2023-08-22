@@ -3,7 +3,7 @@ import { TypeOfferPage } from '../types/offer';
 import { SortOptions } from '../const';
 
 import { CITIES, AuthorizationStatus } from '../const';
-import { cityChange, selectOffer, changeSort, loadOffers, requireAuthorization, setError } from './action';
+import { cityChange, selectOffer, changeSort, loadOffers, requireAuthorization, setError, setOffersDataLoadingStatus } from './action';
 
 
 type InitialState = {
@@ -13,6 +13,7 @@ type InitialState = {
   sortOption: string;
   authorizationStatus: AuthorizationStatus;
   error: string | null;
+  isOffersDataLoading: boolean;
 };
 
 const initialState: InitialState = {
@@ -22,6 +23,7 @@ const initialState: InitialState = {
   sortOption: SortOptions.POPULAR,
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
+  isOffersDataLoading: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -43,6 +45,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
+    })
+    .addCase(setOffersDataLoadingStatus, (state, action) => {
+      state.isOffersDataLoading = action.payload;
     });
 });
 

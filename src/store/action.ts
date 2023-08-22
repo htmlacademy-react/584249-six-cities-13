@@ -18,6 +18,8 @@ export const loadOffers = createAction<TypeOfferPage[]>('data/loadOffers');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
+export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
+
 export const setError = createAction('offers/setError', (error: string | null) => ({
   payload: error
 }));
