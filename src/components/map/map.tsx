@@ -1,12 +1,11 @@
-import { Icon, Marker } from 'leaflet';
+import { Icon, Marker, LayerGroup } from 'leaflet';
 import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/map/map';
-import { Location, TypeOfferPage } from '../../types/offer';
+import { TypeOfferPage } from '../../types/offer';
 import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
-  className: string;
-  city: Location;
+  className: 'cities__map' | 'property__map';
   offers: TypeOfferPage[];
   selectedOfferId: string;
 }
@@ -23,31 +22,57 @@ const currentCustomIcon = new Icon({
   iconAnchor: [13.5, 39]
 });
 
-function Map({ className, city, offers, selectedOfferId }: MapProps): JSX.Element {
+const mapStyle = {
+  'cities__map': {
+    height: '100%',
+    width: '100%'
+  },
+  'property__map': {
+    height: '579px',
+    width: '1144px',
+    marginRight: 'auto',
+    marginLeft: 'auto'
+  }
+};
+
+function Map({ className, offers, selectedOfferId }: MapProps): JSX.Element {
+
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const city = offers[0].city;
+  const map = useMap(mapRef, city.location);
+  const style = mapStyle[className];
 
   useEffect(() => {
+    const markerGroup = new LayerGroup();
+
     if (map) {
+      const cityCoordinates = { lat: city.location.latitude, lng: city.location.longitude };
+      map.setView(cityCoordinates);
+
       offers.forEach((offer) => {
         const marker = new Marker({
-          lat: offer.city.location.latitude,
-          lng: offer.city.location.longitude,
+          lat: offer.location.latitude,
+          lng: offer.location.longitude,
         });
 
         marker
           .setIcon(
-            offer.id === selectedOfferId
+            selectedOfferId && offer.id === selectedOfferId
               ? currentCustomIcon
               : defaultCustomIcon
           )
-          .addTo(map);
+          .addTo(markerGroup);
       });
+
+      markerGroup.addTo(map);
     }
-  }, [map, offers, selectedOfferId]);
+    return () => {
+      map?.removeLayer(markerGroup);
+    };
+  }, [map, offers, selectedOfferId, city]);
 
   return (
-    <section className={`${className}__map map`} ref={mapRef}></section>
+    <section style={style} className={`${className} map`} ref={mapRef}></section>
   );
 }
 

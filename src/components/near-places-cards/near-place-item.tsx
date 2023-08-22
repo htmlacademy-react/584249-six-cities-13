@@ -1,6 +1,7 @@
 import { TypeOfferPage } from '../../types/offer';
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoutes } from '../../const';
+import { calculateRating } from '../../utils/utils';
 
 type NearPlaceItemProps = {
   offer: TypeOfferPage;
@@ -29,7 +30,7 @@ function NearPlaceItem({offer}: NearPlaceItemProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: String(offer.rating * 20).concat('%')}} />
+            <span style={{ width: calculateRating(offer.rating)}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

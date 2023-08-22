@@ -39,7 +39,7 @@ function MainPage(): JSX.Element {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{currentCityOffers.length} places to stay in Amsterdam</b>
+                <b className="places__found">{currentCityOffers.length} places to stay in {currentCity}</b>
                 <Sort />
                 <OffersList
                   offers={sortedOffers}
@@ -47,9 +47,8 @@ function MainPage(): JSX.Element {
               </section>
               <div className="cities__right-section">
                 <Map
-                  className="cities"
-                  city={offers[0].city.location}
-                  offers={offers}
+                  className='cities__map'
+                  offers={currentCityOffers}
                   selectedOfferId={activeCard}
                 />
               </div>

@@ -13,3 +13,7 @@ export function sortOffers(offers: TypeOfferPage[], sortBy: string): TypeOfferPa
   }
 }
 
+export function calculateRating(rating: number):string {
+  return String(rating * 20).concat('%');
+}
+
