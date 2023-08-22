@@ -1,4 +1,5 @@
 import { Review } from '../../types/review';
+import { calculateRating } from '../../utils/utils';
 
 type ReviewsListItemProps = {
   review: Review;
@@ -23,7 +24,7 @@ function ReviewsListItem({review}: ReviewsListItemProps):JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{ width: String(rating * 20).concat('%')} } />
+            <span style={{ width: calculateRating(rating)} } />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

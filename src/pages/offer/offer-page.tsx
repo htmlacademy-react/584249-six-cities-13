@@ -5,6 +5,7 @@ import Map from '../../components/map/map';
 import ReviewsList from '../../components/reviews/reviews-list';
 import {Review} from '../../types/review';
 import NearPlaces from '../../components/near-places-cards/near-places';
+import { calculateRating } from '../../utils/utils';
 
 type OfferPageProps = {
   offers: TypeOfferPage[];
@@ -52,7 +53,7 @@ function OfferPage({offers, reviews, nearPlaces}: OfferPageProps):JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: String(offer.rating * 20).concat('%')}} />
+                  <span style={{ width: calculateRating(offer.rating)}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{offer.rating}</span>
@@ -99,8 +100,7 @@ function OfferPage({offers, reviews, nearPlaces}: OfferPageProps):JSX.Element {
             </div>
           </div>}
           <Map
-            className="offer__map map"
-            city={offer ? offer.city.location : offers[0].city.location}
+            className="property__map"
             offers={offers} selectedOfferId={offer ? offer.id : offers[0].id}
           />
         </section>
