@@ -6,6 +6,7 @@ export type OfferCard = {
   isPremium: boolean;
   isFavorite: boolean;
   rating: number;
+  location: Location;
 }
 
 export type TypeOfferPage = OfferCard & {
