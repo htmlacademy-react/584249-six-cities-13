@@ -9,7 +9,9 @@ import Sort from '../../components/sort/sort';
 
 import { cityChange } from '../../store/action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchOfferAction } from '../../store/api-actions';
 import { sortOffers } from '../../utils/utils';
+import { useEffect } from 'react';
 
 function MainPage(): JSX.Element {
   const activeCard = useAppSelector((state) => state.currentOfferId);
@@ -21,9 +23,14 @@ function MainPage(): JSX.Element {
   const sortedOffers = sortOffers(currentCityOffers, currentSortOption);
 
   const dispatch = useAppDispatch();
+
   const onChangeCity = (city: string) => {
     dispatch(cityChange(city));
   };
+
+  useEffect(() => {
+    dispatch(fetchOfferAction());
+  }, [dispatch]);
 
   return (
     <div className="page page--gray page--main">
