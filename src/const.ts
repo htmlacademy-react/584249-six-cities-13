@@ -1,5 +1,7 @@
 const Settings = {
-  OffersCount: 5
+  MaxOffersCount: 5,
+  MaxPhotosAmount: 6,
+  MaxReviewsAmount: 10,
 };
 
 enum AppRoutes {

@@ -1,15 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../const';
+import { NameSpace, FetchStatus } from '../../const';
 import { TypeOfferPage } from '../../types/offer';
-import { fetchFavoritesAction, addToFavoritesAction, removeFromFavoritesAction } from '../api-actions';
+import { fetchFavoritesAction, addToFavoritesAction } from '../api-actions';
+
 
 export type FavoritesData = {
   favorites: TypeOfferPage[];
+  fetchStatus: FetchStatus;
 };
 
 
 const initialState: FavoritesData = {
   favorites: [],
+  fetchStatus: FetchStatus.Idle,
 };
 
 export const favoritesSlice = createSlice({
@@ -18,14 +21,23 @@ export const favoritesSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
+      .addCase(fetchFavoritesAction.pending, (state) => {
+        state.fetchStatus = FetchStatus.Loading;
+      })
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
+        state.fetchStatus = FetchStatus.Success;
         state.favorites = action.payload;
       })
-      .addCase(addToFavoritesAction.fulfilled, (state, action) => {
-        state.favorites.push(action.payload);
+      .addCase(fetchFavoritesAction.rejected, (state) => {
+        state.fetchStatus = FetchStatus.Failed;
       })
-      .addCase(removeFromFavoritesAction.fulfilled, (state, action) => {
-        state.favorites = state.favorites.filter(({ id }) => id !== action.payload.id);
+      .addCase(addToFavoritesAction.fulfilled, (state, action) => {
+
+        if (action.payload.isFavorite) {
+          state.favorites.push(action.payload);
+        } else {
+          state.favorites = state.favorites.filter(({ id }) => id !== action.payload.id);
+        }
       });
   },
 });

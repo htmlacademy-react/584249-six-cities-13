@@ -24,11 +24,8 @@ export const appSlice = createSlice({
     changeCity(state, action: PayloadAction<Cities>) {
       state.city = action.payload;
     },
-    selectOffer: (state, action: PayloadAction<number | null>) => {
-      state.selectedOfferId = action.payload;
-    }
   }
 });
 
 
-export const { changeCity, changeSort, selectOffer } = appSlice.actions;
+export const { changeCity, changeSort } = appSlice.actions;
