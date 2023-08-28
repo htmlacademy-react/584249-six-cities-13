@@ -1,4 +1,5 @@
 import { useParams } from 'react-router';
+import cn from 'classnames';
 import { useEffect } from 'react';
 import { calculateRating, sortReviews } from '../../utils/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -9,7 +10,7 @@ import { getReviews } from '../../store/reviews-slice/reviews-slice-selectors';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import ReviewsList from '../../components/reviews/reviews-list';
-import NearPlaces from '../../components/near-places-cards/near-places';
+import OffersList from '../../components/offers/offers-list';
 import Loading from '../loading/loading';
 
 const MAX_PHOTOS_AMOUNT = 6;
@@ -36,7 +37,7 @@ function OfferPage():JSX.Element {
     return <Loading />;
   }
 
-  const { images, rating, title, type, bedrooms, maxAdults, price, goods, description, isPremium } = offer;
+  const { images, rating, title, type, bedrooms, maxAdults, price, goods, description, isPremium, isFavorite } = offer;
   const { avatarUrl, isPro, name } = offer.host;
   const sortedReviews = sortReviews(reviews).slice(0, MAX_REVIEWS_AMOUNT);
 
@@ -65,7 +66,10 @@ function OfferPage():JSX.Element {
                 <h1 className="offer__name">
                   {title}
                 </h1>
-                <button className='offer__bookmark-button button' type="button">
+                <button
+                  className={cn('offer__bookmark-button button', isFavorite && 'offer__bookmark-button--active')}
+                  type="button"
+                >
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
@@ -126,7 +130,10 @@ function OfferPage():JSX.Element {
           />
         </section>
         <div className="container">
-          <NearPlaces nearPlaces={nearOffers} />
+          <OffersList
+            offers={nearOffers}
+            cardClass='near-places'
+          />
         </div>
       </main>
     </div>

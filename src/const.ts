@@ -37,7 +37,8 @@ enum APIRoute {
   Offers = '/hotels',
   Reviews = '/comments',
   Login = '/login',
-  Logout = '/logout'
+  Logout = '/logout',
+  Favorites = '/favorite'
 }
 
 enum NameSpace {
@@ -45,7 +46,8 @@ enum NameSpace {
   User = 'USER',
   App = 'APP',
   Offer = 'OFFER',
-  Reviews = 'REVIEWS'
+  Reviews = 'REVIEWS',
+  Favorites = 'FAVORITES',
 }
 
 enum FetchStatus {

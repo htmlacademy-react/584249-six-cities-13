@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { AppRoutes, AuthorizationStatus } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-slice/user-slice-selectors';
-import { getOffers } from '../../store/offers-slice/offers-slice-selectors';
 
 import MainPage from '../../pages/main/main-page';
 import FavoritesPage from '../../pages/favorites/favorites-page';
@@ -18,7 +17,6 @@ import browserHistory from '../../browser-history/browser-history';
 import HistoryRouter from '../history-route/history-route';
 
 function App(): JSX.Element {
-  const offers = useAppSelector(getOffers);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const dispatch = useAppDispatch();
@@ -48,7 +46,7 @@ function App(): JSX.Element {
           path={AppRoutes.Favorites}
           element={
             <PrivateRoute>
-              <FavoritesPage offers={offers} />
+              <FavoritesPage />
             </PrivateRoute>
           }
         />

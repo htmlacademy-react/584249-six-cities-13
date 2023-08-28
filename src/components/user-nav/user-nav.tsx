@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
-import { getUserData } from '../../store/user-slice/user-slice-selectors';
-import { getIsAuthorized } from '../../store/user-slice/user-slice-selectors';
-
+import { getUserData, getIsAuthorized } from '../../store/user-slice/user-slice-selectors';
+import { getFavorites } from '../../store/favorites-slice/favorites-slice-selectors';
 
 function UserNav(): JSX.Element {
 
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector(getIsAuthorized);
   const userData = useAppSelector(getUserData);
+  const favorites = useAppSelector(getFavorites);
 
   return (
 
@@ -18,11 +18,11 @@ function UserNav(): JSX.Element {
         {isAuth && (
           <>
             <li className="header__nav-item user">
-              <Link className="header__nav-link header__nav-link--profile" to="#">
+              <Link className="header__nav-link header__nav-link--profile" to={'/favorites'}>
                 <div className="header__avatar-wrapper user__avatar-wrapper">
                 </div>
                 <span className="header__user-name user__name">{userData?.email}</span>
-                <span className="header__favorite-count">3</span>
+                <span className="header__favorite-count">{favorites.length}</span>
               </Link>
             </li>
             <li className="header__nav-item">

@@ -16,7 +16,7 @@ type ThunkOptions = {
   extra: AxiosInstance;
 }
 
-type ReveiwData = {
+type ReviewData = {
   comment: string;
   rating: number;
   id: number;
@@ -33,11 +33,6 @@ export const fetchOffersAction = createAsyncThunk<TypeOfferPage[], undefined, Th
     }
   }
 );
-
-export const checkAuthAction = createAsyncThunk<UserData, undefined, ThunkOptions>('user/checkAuth', async (_arg, { extra: api }) => {
-  const { data } = await api.get<UserData>(APIRoute.Login);
-  return data;
-});
 
 export const loginAction = createAsyncThunk<UserData, AuthData, {
   dispatch: AppDispatch;
@@ -94,9 +89,7 @@ export const fetchNearOffersAction = createAsyncThunk<
   ThunkOptions
 >('data/fetchNearOffers', async (id, { extra: api }) => {
   try {
-    const { data } = await api.get<TypeOfferPage[]>(
-      `${APIRoute.Nearby}/${id}/nearby`
-    );
+    const { data } = await api.get<TypeOfferPage[]>(`${APIRoute.Offers}/${id}/nearby`);
     return data;
   } catch (err) {
 
@@ -122,7 +115,7 @@ export const fetchReviewsAction = createAsyncThunk<
 
 export const postReviewAction = createAsyncThunk<
   Review[],
-  ReveiwData,
+  ReviewData,
   ThunkOptions
 >(
   'data/sendReviewAction',
@@ -136,3 +129,55 @@ export const postReviewAction = createAsyncThunk<
     }
   }
 );
+
+export const fetchFavoritesAction = createAsyncThunk<
+  TypeOfferPage[],
+  undefined,
+  ThunkOptions
+>('data/fetchFavorites', async (_arg, { extra: api }) => {
+  try {
+    const { data } = await api.get<TypeOfferPage[]>(APIRoute.Favorites);
+    return data;
+  } catch (err) {
+    throw new Error();
+  }
+});
+
+export const addToFavoritesAction = createAsyncThunk<
+  TypeOfferPage,
+  { id: number },
+  ThunkOptions
+>('data/addToFavorites', async ({ id }, { extra: api }) => {
+  try {
+    const { data } = await api.post<TypeOfferPage>(`${APIRoute.Favorites}/${id}/1`);
+    return data;
+  } catch (err) {
+    toast.error('Could not add to favorites');
+    throw new Error();
+  }
+});
+
+export const removeFromFavoritesAction = createAsyncThunk<
+  TypeOfferPage,
+  { id: number },
+  ThunkOptions
+>('data/removeFromFavorites', async ({ id }, { extra: api }) => {
+  try {
+    const { data } = await api.post<TypeOfferPage>(`${APIRoute.Favorites}/${id}/0`);
+    return data;
+  } catch (err) {
+    toast.error('Failed to remove from favorites');
+    throw new Error();
+  }
+});
+
+export const checkAuthAction = createAsyncThunk<
+   UserData,
+   undefined,
+   ThunkOptions
+ >(
+   'user/checkAuth', async (_arg, { dispatch, extra: api }) => {
+     const { data } = await api.get<UserData>(APIRoute.Login);
+     dispatch(fetchFavoritesAction());
+     return data;
+   });

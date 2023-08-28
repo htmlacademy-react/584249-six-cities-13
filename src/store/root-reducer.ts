@@ -5,6 +5,7 @@ import { NameSpace } from '../const';
 import { appSlice } from './app-slice/app-slice';
 import { reviewsSlice } from './reviews-slice/reviews-slice';
 import { offersSlice } from './offers-slice/offers-slice';
+import { favoritesSlice } from './favorites-slice/favorites-slice';
 
 export const rootReducer = combineReducers({
   [NameSpace.User]: userSlice.reducer,
@@ -12,4 +13,5 @@ export const rootReducer = combineReducers({
   [NameSpace.App]: appSlice.reducer,
   [NameSpace.Offer]: oneOfferSlice.reducer,
   [NameSpace.Reviews]: reviewsSlice.reducer,
+  [NameSpace.Favorites]: favoritesSlice.reducer,
 });

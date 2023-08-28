@@ -60,6 +60,7 @@ function MainPage(): JSX.Element {
                 <Sort />
                 <OffersList
                   offers={sortedOffers}
+                  cardClass='cities'
                 />
               </section>
               <div className="cities__right-section">
