@@ -7,16 +7,13 @@ import { getNearOffers, getOffer, getOfferStatus } from '../../store/offer-slice
 import { fetchOfferAction, fetchNearOffersAction, fetchReviewsAction, addToFavoritesAction } from '../../store/api-actions';
 import { getReviews } from '../../store/reviews-slice/reviews-slice-selectors';
 import { getIsAuthorized } from '../../store/user-slice/user-slice-selectors';
-import { AppRoutes } from '../../const';
+import { AppRoutes, Settings } from '../../const';
 
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import ReviewsList from '../../components/reviews/reviews-list';
 import OffersList from '../../components/offers/offers-list';
 import Loading from '../loading/loading';
-
-const MAX_PHOTOS_AMOUNT = 6;
-const MAX_REVIEWS_AMOUNT = 10;
 
 function OfferPage():JSX.Element {
 
@@ -43,7 +40,7 @@ function OfferPage():JSX.Element {
 
   const { images, rating, title, type, bedrooms, maxAdults, price, goods, description, isPremium, isFavorite } = offer;
   const { avatarUrl, isPro, name } = offer.host;
-  const sortedReviews = sortReviews(reviews).slice(0, MAX_REVIEWS_AMOUNT);
+  const sortedReviews = sortReviews(reviews).slice(0, Settings.MaxReviewsAmount);
 
   const handleButtonClick = () => {
     if (!isAuth) {
@@ -65,7 +62,7 @@ function OfferPage():JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {images.slice(0, MAX_PHOTOS_AMOUNT).map((image) => (
+              {images.slice(0, Settings.MaxPhotosAmount).map((image) => (
                 <div className="offer__image-wrapper" key={image}>
                   <img className="offer__image" src={image} alt={title} />
                 </div>

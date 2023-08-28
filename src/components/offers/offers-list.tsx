@@ -2,7 +2,7 @@ import OfferCard from '../../components/offers/offer-card';
 import { TypeOfferPage } from '../../types/offer';
 
 type OffersListProps = {
-  offersNumber?: number;
+  offersLimit?: number;
   offers: TypeOfferPage[];
   cardClass: string;
   onMouseOver?: (activeCard: number) => void;
@@ -11,7 +11,7 @@ type OffersListProps = {
 
 let classes = 'cities__places-list places__list tabs__content';
 
-function OffersList({offersNumber, offers, cardClass, onMouseLeave, onMouseOver }: OffersListProps): JSX.Element {
+function OffersList({offersLimit, offers, cardClass, onMouseLeave, onMouseOver }: OffersListProps): JSX.Element {
 
   if (cardClass === 'favorites') {
     classes = 'favorites__places';
@@ -24,7 +24,7 @@ function OffersList({offersNumber, offers, cardClass, onMouseLeave, onMouseOver 
       <section className="near-places places">
         <h2 className="near-places__title">Other places in the neighbourhood</h2>
         <div className={classes}>
-          {offers.slice(0, offersNumber).map((offer) => (
+          {offers.slice(0, offersLimit).map((offer) => (
             <OfferCard
               key={offer.id}
               oneOffer={offer}
@@ -41,7 +41,7 @@ function OffersList({offersNumber, offers, cardClass, onMouseLeave, onMouseOver 
 
     return (
       <div className={classes}>
-        {offers.slice(0, offersNumber).map((offer) => (
+        {offers.slice(0, offersLimit).map((offer) => (
           <OfferCard
             key={offer.id}
             oneOffer={offer}
