@@ -1,23 +1,30 @@
+import { useAppSelector } from '../../hooks';
+import { Review } from '../../types/review';
+import { getIsAuthorized } from '../../store/user-slice/user-slice-selectors';
 import ReviewForm from './review-form';
 import ReviewsListItem from './reviews-list-item';
-import { Review } from '../../types/review';
-import { AuthorizationStatus } from '../../const';
 
-type ReviewsListProps = {
+type ReviewsProps = {
   reviews: Review[];
+  id: number;
 }
 
-function ReviewsList({reviews}: ReviewsListProps): JSX.Element {
+function ReviewsList({ reviews, id }: ReviewsProps): JSX.Element {
+
+  const isAuth = useAppSelector(getIsAuthorized);
+
   return (
-    <section className="offer__reviews reviews">
+    <section className="property__reviews reviews">
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
       <ul className="reviews__list">
-        {reviews.map((i) => (
-          <ReviewsListItem review={i} key={i.id}/>
+        {reviews.map((review) => (
+          <ReviewsListItem
+            key={review.id}
+            review={review}
+          />
         ))}
       </ul>
-      {AuthorizationStatus.Auth === 'AUTH' &&
-      <ReviewForm />}
+      {isAuth && <ReviewForm id={id} />}
     </section>
   );
 }
