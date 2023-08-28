@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
-import { AuthorizationStatus } from '../../const';
 import UserNotLogged from '../user-not-logged/user-not-logged';
 import UserNav from '../user-nav/user-nav';
+import { getIsAuthorized } from '../../store/user-slice/user-slice-selectors';
 
 function Header(): JSX.Element {
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const isAuth = useAppSelector(getIsAuthorized);
 
   return (
     <header className="header">
@@ -18,7 +16,7 @@ function Header(): JSX.Element {
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
             </Link>
           </div>
-          {(authorizationStatus === AuthorizationStatus.Auth) ? <UserNav /> : <UserNotLogged />}
+          {isAuth ? <UserNav /> : <UserNotLogged />}
         </div>
       </div>
     </header>

@@ -1,15 +1,19 @@
-import { CITIES } from '../../const';
+import { Cities } from '../../const';
+import { useAppDispatch } from '../../hooks';
+import { changeCity } from '../../store/app-slice/app-slice';
 
 type LocationsListProps = {
   currentCity: string;
-  onChangeCity: (city: string) => void;
 }
 
-function LocationsList({ currentCity, onChangeCity }: LocationsListProps): JSX.Element {
+function LocationsList({ currentCity }: LocationsListProps): JSX.Element {
+
+  const dispatch = useAppDispatch();
+
   return(
     <section className="locations container">
       <ul className="locations__list tabs__list">
-        {CITIES.map((city) => {
+        {Object.entries(Cities).map(([_, city]) => {
           const className = 'locations__item-link tabs__item';
           if (currentCity === city) {
             className.concat(' tabs__item--active');
@@ -17,14 +21,14 @@ function LocationsList({ currentCity, onChangeCity }: LocationsListProps): JSX.E
           return (
             <li
               className="locations__item"
-              key={city}
+              key={_}
             >
               <a
                 className={className}
                 href="#"
                 onClick={(evt) => {
                   evt.preventDefault();
-                  onChangeCity(city);
+                  dispatch(changeCity(city));
                 }}
               >
                 <span>{city}</span>

@@ -1,20 +1,21 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
-import { AuthorizationStatus } from '../../const';
+import { getUserData } from '../../store/user-slice/user-slice-selectors';
+import { getIsAuthorized } from '../../store/user-slice/user-slice-selectors';
 
 
 function UserNav(): JSX.Element {
 
   const dispatch = useAppDispatch();
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const userData = useAppSelector((state) => state.userData);
+  const isAuth = useAppSelector(getIsAuthorized);
+  const userData = useAppSelector(getUserData);
 
   return (
 
     <nav className="header__nav">
       <ul className="header__nav-list">
-        {authStatus === AuthorizationStatus.Auth && (
+        {isAuth && (
           <>
             <li className="header__nav-item user">
               <Link className="header__nav-link header__nav-link--profile" to="#">

@@ -1,5 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { AppRoutes, AuthorizationStatus } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-slice/user-slice-selectors';
+import { getOffers } from '../../store/offers-slice/offers-slice-selectors';
 
 import MainPage from '../../pages/main/main-page';
 import FavoritesPage from '../../pages/favorites/favorites-page';
@@ -8,21 +10,22 @@ import LoginPage from '../../pages/login/login-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import OfferPage from '../../pages/offer/offer-page';
 import LoadingScreen from '../../pages/loading/loading';
-import { TypeOfferPage } from '../../types/offer';
-import { Review } from '../../types/review';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { useEffect } from 'react';
+import { checkAuthAction } from '../../store/api-actions';
 
 import browserHistory from '../../browser-history/browser-history';
 import HistoryRouter from '../history-route/history-route';
 
-type AppMainProps = {
-  reviews: Review[];
-  nearPlaces: TypeOfferPage[];
-}
+function App(): JSX.Element {
+  const offers = useAppSelector(getOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-function App({reviews, nearPlaces}: AppMainProps): JSX.Element {
-  const offers = useAppSelector((state) => state.Offers);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuthAction());
+  }, [dispatch]);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
     return (
@@ -51,7 +54,7 @@ function App({reviews, nearPlaces}: AppMainProps): JSX.Element {
         />
         <Route
           path={AppRoutes.Offer}
-          element={<OfferPage offers={offers} reviews={reviews} nearPlaces={nearPlaces} />}
+          element={<OfferPage />}
         />
         <Route
           path="*"
