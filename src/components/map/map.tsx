@@ -31,7 +31,8 @@ const mapStyle = {
     height: '579px',
     width: '1144px',
     marginRight: 'auto',
-    marginLeft: 'auto'
+    marginLeft: 'auto',
+    marginBottom: '50px'
   }
 };
 
