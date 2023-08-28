@@ -1,11 +1,13 @@
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import cn from 'classnames';
 import { useEffect } from 'react';
 import { calculateRating, sortReviews } from '../../utils/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getNearOffers, getOffer, getOfferStatus } from '../../store/offer-slice/offer-slice-selectors';
-import { fetchOfferAction, fetchNearOffersAction, fetchReviewsAction } from '../../store/api-actions';
+import { fetchOfferAction, fetchNearOffersAction, fetchReviewsAction, addToFavoritesAction } from '../../store/api-actions';
 import { getReviews } from '../../store/reviews-slice/reviews-slice-selectors';
+import { getIsAuthorized } from '../../store/user-slice/user-slice-selectors';
+import { AppRoutes } from '../../const';
 
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
@@ -19,6 +21,7 @@ const MAX_REVIEWS_AMOUNT = 10;
 function OfferPage():JSX.Element {
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const id = Number(useParams().id);
 
@@ -32,6 +35,7 @@ function OfferPage():JSX.Element {
   const offerStatus = useAppSelector(getOfferStatus);
   const nearOffers = useAppSelector(getNearOffers);
   const reviews = useAppSelector(getReviews);
+  const isAuth = useAppSelector(getIsAuthorized);
 
   if (!offer || offerStatus.isLoading) {
     return <Loading />;
@@ -40,6 +44,18 @@ function OfferPage():JSX.Element {
   const { images, rating, title, type, bedrooms, maxAdults, price, goods, description, isPremium, isFavorite } = offer;
   const { avatarUrl, isPro, name } = offer.host;
   const sortedReviews = sortReviews(reviews).slice(0, MAX_REVIEWS_AMOUNT);
+
+  const handleButtonClick = () => {
+    if (!isAuth) {
+      navigate(AppRoutes.Login);
+
+      return;
+    }
+    dispatch(addToFavoritesAction({
+      id: id,
+      status: Number(!isFavorite)
+    }));
+  };
 
   return (
     <div className="page">
@@ -69,6 +85,7 @@ function OfferPage():JSX.Element {
                 <button
                   className={cn('offer__bookmark-button button', isFavorite && 'offer__bookmark-button--active')}
                   type="button"
+                  onClick={handleButtonClick}
                 >
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark" />

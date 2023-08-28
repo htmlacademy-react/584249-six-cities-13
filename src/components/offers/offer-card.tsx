@@ -4,10 +4,9 @@ import { AppRoutes } from '../../const';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectOffer } from '../../store/app-slice/app-slice';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getIsAuthorized } from '../../store/user-slice/user-slice-selectors';
-import { addToFavoritesAction, removeFromFavoritesAction } from '../../store/api-actions';
+import { addToFavoritesAction } from '../../store/api-actions';
 
 import cn from 'classnames';
 
@@ -22,21 +21,17 @@ function OfferCard({oneOffer, cardClass}: OfferCardProps): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [isActive, setActive] = useState(isFavorite);
   const isAuth = useAppSelector(getIsAuthorized);
 
   const handleButtonClick = () => {
-    if (isAuth) {
-      if (isFavorite) {
-        dispatch(removeFromFavoritesAction({ id }));
-        setActive(isActive);
-      } else {
-        dispatch(addToFavoritesAction({ id }));
-        setActive(!isActive);
-      }
-    } else {
+    if (!isAuth) {
       navigate(AppRoutes.Login);
+      return;
     }
+    dispatch(addToFavoritesAction({
+      id: id,
+      status: Number(!isFavorite)
+    }));
   };
 
   const sizes = {
@@ -87,7 +82,7 @@ function OfferCard({oneOffer, cardClass}: OfferCardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={cn('place-card__bookmark-button button', isActive && 'place-card__bookmark-button--active')}
+            className={cn('place-card__bookmark-button button', isFavorite && 'place-card__bookmark-button--active')}
             type="button"
             onClick={handleButtonClick}
           >

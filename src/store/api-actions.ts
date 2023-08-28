@@ -22,6 +22,11 @@ type ReviewData = {
   id: number;
 }
 
+type FavoritesData = {
+  id: number;
+  status: number;
+}
+
 export const fetchOffersAction = createAsyncThunk<TypeOfferPage[], undefined, ThunkOptions>(
   'data/fetchOffers',
   async (_arg, { extra: api }) => {
@@ -29,28 +34,8 @@ export const fetchOffersAction = createAsyncThunk<TypeOfferPage[], undefined, Th
       const { data } = await api.get<TypeOfferPage[]>(APIRoute.Offers);
       return data;
     } catch (err) {
+
       throw new Error();
-    }
-  }
-);
-
-export const loginAction = createAsyncThunk<UserData, AuthData, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  'user/login',
-  async ({ login: email, password }, { dispatch, extra: api }) => {
-    try {
-      const { data } = await api.post<UserData>(APIRoute.Login, { email, password });
-      saveToken(data.token);
-      dispatch(redirectToRoute(AppRoutes.Root));
-
-      return data;
-    } catch (err) {
-
-      toast.error('Login failed');
-      throw err;
     }
   });
 
@@ -65,8 +50,7 @@ export const logoutAction = createAsyncThunk<void, undefined, ThunkOptions>(
       toast.error('Logout failed');
       throw err;
     }
-  },
-);
+  });
 
 export const fetchOfferAction = createAsyncThunk<
   TypeOfferPage,
@@ -107,6 +91,7 @@ export const fetchReviewsAction = createAsyncThunk<
     const { data } = await api.get<Review[]>(`${APIRoute.Reviews}/${id}`);
     return data;
   } catch (err) {
+
     toast.error('Could not load the reviews');
     throw err;
   }
@@ -124,11 +109,11 @@ export const postReviewAction = createAsyncThunk<
       const { data } = await api.post<Review[]>(`${APIRoute.Reviews}/${id}`, { rating, comment });
       return data;
     } catch (err) {
+
       toast.error('Could not send the review');
       throw err;
     }
-  }
-);
+  });
 
 export const fetchFavoritesAction = createAsyncThunk<
   TypeOfferPage[],
@@ -139,34 +124,22 @@ export const fetchFavoritesAction = createAsyncThunk<
     const { data } = await api.get<TypeOfferPage[]>(APIRoute.Favorites);
     return data;
   } catch (err) {
+
     throw new Error();
   }
 });
 
 export const addToFavoritesAction = createAsyncThunk<
   TypeOfferPage,
-  { id: number },
+  FavoritesData,
   ThunkOptions
->('data/addToFavorites', async ({ id }, { extra: api }) => {
+>('data/addToFavorites', async ({ id, status }, { extra: api }) => {
   try {
-    const { data } = await api.post<TypeOfferPage>(`${APIRoute.Favorites}/${id}/1`);
+    const { data } = await api.post<TypeOfferPage>(`${APIRoute.Favorites}/${id}/${status}}`);
     return data;
   } catch (err) {
-    toast.error('Could not add to favorites');
-    throw new Error();
-  }
-});
 
-export const removeFromFavoritesAction = createAsyncThunk<
-  TypeOfferPage,
-  { id: number },
-  ThunkOptions
->('data/removeFromFavorites', async ({ id }, { extra: api }) => {
-  try {
-    const { data } = await api.post<TypeOfferPage>(`${APIRoute.Favorites}/${id}/0`);
-    return data;
-  } catch (err) {
-    toast.error('Failed to remove from favorites');
+    toast.error('Could not add to favorites');
     throw new Error();
   }
 });
@@ -175,9 +148,30 @@ export const checkAuthAction = createAsyncThunk<
    UserData,
    undefined,
    ThunkOptions
- >(
-   'user/checkAuth', async (_arg, { dispatch, extra: api }) => {
-     const { data } = await api.get<UserData>(APIRoute.Login);
-     dispatch(fetchFavoritesAction());
-     return data;
-   });
+>(
+  'user/checkAuth', async (_arg, { dispatch, extra: api }) => {
+    const { data } = await api.get<UserData>(APIRoute.Login);
+    dispatch(fetchFavoritesAction());
+    return data;
+  });
+
+export const loginAction = createAsyncThunk<UserData, AuthData, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'user/login',
+  async ({ login: email, password }, { dispatch, extra: api }) => {
+    try {
+      const { data } = await api.post<UserData>(APIRoute.Login, { email, password });
+      saveToken(data.token);
+      dispatch(redirectToRoute(AppRoutes.Root));
+      dispatch(fetchFavoritesAction());
+      return data;
+    } catch (err) {
+
+      toast.error('Login failed');
+      throw err;
+    }
+  }
+);
