@@ -89,9 +89,7 @@ export const fetchNearOffersAction = createAsyncThunk<
   ThunkOptions
 >('data/fetchNearOffers', async (id, { extra: api }) => {
   try {
-    const { data } = await api.get<TypeOfferPage[]>(
-      `${APIRoute.Nearby}/${id}/nearby`
-    );
+    const { data } = await api.get<TypeOfferPage[]>(`${APIRoute.Offers}/${id}/nearby`);
     return data;
   } catch (err) {
 
