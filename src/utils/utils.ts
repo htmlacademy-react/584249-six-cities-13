@@ -1,4 +1,5 @@
 import { TypeOfferPage } from '../types/offer';
+import { Review } from '../types/review';
 
 export function sortOffers(offers: TypeOfferPage[], sortBy: string): TypeOfferPage[] {
   switch (sortBy) {
@@ -11,6 +12,10 @@ export function sortOffers(offers: TypeOfferPage[], sortBy: string): TypeOfferPa
     default:
       return offers;
   }
+}
+
+export function sortReviews(reviews: Review[]): Review[] {
+  return [...reviews].sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 }
 
 export function calculateRating(rating: number):string {
