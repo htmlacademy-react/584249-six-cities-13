@@ -7,7 +7,7 @@ import 'leaflet/dist/leaflet.css';
 type MapProps = {
   className: 'cities__map' | 'property__map';
   offers: TypeOfferPage[];
-  selectedOfferId: string;
+  selectedOfferId: number | null;
 }
 
 const defaultCustomIcon = new Icon({
