@@ -10,20 +10,21 @@ import Error from '../../components/error/error';
 import LoadingScreen from '../loading/loading';
 
 import { getOffers, getOffersStatus } from '../../store/offers-slice/offers-slice-selectors';
-import { getOffersCity, getSelectedOfferId, getSortOption } from '../../store/app-slice/app-slice-selectors';
+import { getOffersCity, getSortOption } from '../../store/app-slice/app-slice-selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchOffersAction } from '../../store/api-actions';
 import { sortOffers } from '../../utils/utils';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function MainPage(): JSX.Element {
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchOffersAction());
   }, [dispatch]);
 
   const currentCity = useAppSelector(getOffersCity);
-  const activeCardId = useAppSelector(getSelectedOfferId);
   const currentSortOption = useAppSelector(getSortOption);
   const offers = useAppSelector(getOffers);
   const status = useAppSelector(getOffersStatus);
@@ -61,6 +62,8 @@ function MainPage(): JSX.Element {
                 <OffersList
                   offers={sortedOffers}
                   cardClass='cities'
+                  onMouseLeave={setActiveCardId}
+                  onMouseOver={setActiveCardId}
                 />
               </section>
               <div className="cities__right-section">

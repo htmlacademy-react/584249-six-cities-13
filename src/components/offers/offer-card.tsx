@@ -3,7 +3,7 @@ import { TypeOfferPage } from '../../types/offer';
 import { AppRoutes } from '../../const';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { selectOffer } from '../../store/app-slice/app-slice';
+// import { selectOffer } from '../../store/app-slice/app-slice';
 import { useNavigate } from 'react-router-dom';
 import { getIsAuthorized } from '../../store/user-slice/user-slice-selectors';
 import { addToFavoritesAction } from '../../store/api-actions';
@@ -13,9 +13,11 @@ import cn from 'classnames';
 type OfferCardProps = {
   oneOffer: TypeOfferPage;
   cardClass: string;
+  onMouseOver?: (activeCard: number) => void;
+  onMouseLeave?: (activeCard: number | null) => void;
 }
 
-function OfferCard({oneOffer, cardClass}: OfferCardProps): JSX.Element {
+function OfferCard({oneOffer, cardClass, onMouseLeave, onMouseOver}: OfferCardProps): JSX.Element {
 
   const { price, rating, title, type, isPremium, id, images, isFavorite } = oneOffer;
   const dispatch = useAppDispatch();
@@ -63,8 +65,8 @@ function OfferCard({oneOffer, cardClass}: OfferCardProps): JSX.Element {
   return (
     <article
       className={cn(cardClass.concat('__card'), 'place-card')}
-      onMouseOver={() => dispatch(selectOffer(oneOffer.id))}
-      onMouseOut={() => dispatch(selectOffer(null))}
+      onMouseOver={onMouseOver && (() => onMouseOver(id))}
+      onMouseOut={onMouseLeave && (() => onMouseLeave(null))}
     >
       {isPremium &&
       <div className="place-card__mark">

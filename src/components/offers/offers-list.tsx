@@ -5,11 +5,13 @@ type OffersListProps = {
   offersNumber?: number;
   offers: TypeOfferPage[];
   cardClass: string;
+  onMouseOver?: (activeCard: number) => void;
+  onMouseLeave?: (activeCard: number | null) => void;
 }
 
 let classes = 'cities__places-list places__list tabs__content';
 
-function OffersList({offersNumber, offers, cardClass }: OffersListProps): JSX.Element {
+function OffersList({offersNumber, offers, cardClass, onMouseLeave, onMouseOver }: OffersListProps): JSX.Element {
 
   if (cardClass === 'favorites') {
     classes = 'favorites__places';
@@ -22,7 +24,15 @@ function OffersList({offersNumber, offers, cardClass }: OffersListProps): JSX.El
       <section className="near-places places">
         <h2 className="near-places__title">Other places in the neighbourhood</h2>
         <div className={classes}>
-          {offers.slice(0, offersNumber).map((offer) => <OfferCard key={offer.id} oneOffer={offer} cardClass={cardClass} />)}
+          {offers.slice(0, offersNumber).map((offer) => (
+            <OfferCard
+              key={offer.id}
+              oneOffer={offer}
+              cardClass={cardClass}
+              onMouseLeave={onMouseLeave}
+              onMouseOver={onMouseOver}
+            />
+          ))}
         </div>
       </section>
     );
@@ -31,7 +41,15 @@ function OffersList({offersNumber, offers, cardClass }: OffersListProps): JSX.El
 
     return (
       <div className={classes}>
-        {offers.slice(0, offersNumber).map((offer) => <OfferCard key={offer.id} oneOffer={offer} cardClass={cardClass} />)}
+        {offers.slice(0, offersNumber).map((offer) => (
+          <OfferCard
+            key={offer.id}
+            oneOffer={offer}
+            cardClass={cardClass}
+            onMouseLeave={onMouseLeave}
+            onMouseOver={onMouseOver}
+          />
+        ))}
       </div>
     );
   }
