@@ -6,47 +6,57 @@ import LocationsList from '../../components/locations/locations-list';
 import Map from '../../components/map/map';
 import MainEmpty from '../../components/main-empty/main-empty';
 import Sort from '../../components/sort/sort';
+import Error from '../../components/error/error';
+import LoadingScreen from '../loading/loading';
 
-import { cityChange } from '../../store/action';
+import { getOffers, getOffersStatus } from '../../store/offers-slice/offers-slice-selectors';
+import { getOffersCity, getSelectedOfferId, getSortOption } from '../../store/app-slice/app-slice-selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchOfferAction } from '../../store/api-actions';
+import { fetchOffersAction } from '../../store/api-actions';
 import { sortOffers } from '../../utils/utils';
 import { useEffect } from 'react';
 
 function MainPage(): JSX.Element {
-  const activeCard = useAppSelector((state) => state.currentOfferId);
-  const currentCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.Offers);
-  const currentSortOption = useAppSelector((state) => state.sortOption);
-
-  const currentCityOffers = offers.filter((offer) => offer.city.name === currentCity);
-  const sortedOffers = sortOffers(currentCityOffers, currentSortOption);
-
   const dispatch = useAppDispatch();
-
-  const onChangeCity = (city: string) => {
-    dispatch(cityChange(city));
-  };
-
   useEffect(() => {
-    dispatch(fetchOfferAction());
+    dispatch(fetchOffersAction());
   }, [dispatch]);
+
+  const currentCity = useAppSelector(getOffersCity);
+  const activeCardId = useAppSelector(getSelectedOfferId);
+  const currentSortOption = useAppSelector(getSortOption);
+  const offers = useAppSelector(getOffers);
+  const status = useAppSelector(getOffersStatus);
+
+  const filteredOffers = offers.filter((offer) => offer.city.name === currentCity);
+  const sortedOffers = sortOffers(filteredOffers, currentSortOption);
+  const isEmpty = sortedOffers.length === 0;
+
+  if (status.isError) {
+    return <Error />;
+  }
+
+  if (status.isLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <div className="page page--gray page--main">
       <Header />
 
-      <main className={cn('page__main page__main--index', (currentCityOffers.length === 0) && 'page__main-index-empty')}>
+      <main className={cn('page__main page__main--index', isEmpty && 'page__main-index-empty')}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <LocationsList currentCity={currentCity} onChangeCity={onChangeCity} />
+          <LocationsList currentCity={currentCity} />
         </div>
         <div className="cities">
-          {(currentCityOffers.length > 0) ? (
+          {!isEmpty ? (
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{currentCityOffers.length} places to stay in {currentCity}</b>
+                <b className="places__found">{filteredOffers.length} places to stay in {currentCity}</b>
                 <Sort />
                 <OffersList
                   offers={sortedOffers}
@@ -55,8 +65,8 @@ function MainPage(): JSX.Element {
               <div className="cities__right-section">
                 <Map
                   className='cities__map'
-                  offers={currentCityOffers}
-                  selectedOfferId={activeCard}
+                  offers={filteredOffers}
+                  selectedOfferId={activeCardId}
                 />
               </div>
             </div>
