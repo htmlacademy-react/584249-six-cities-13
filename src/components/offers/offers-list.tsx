@@ -15,11 +15,26 @@ function OffersList({offersNumber, offers, cardClass }: OffersListProps): JSX.El
     classes = 'favorites__places';
   }
 
-  return (
-    <div className={classes}>
-      {offers.slice(0, offersNumber).map((offer) => <OfferCard key={offer.id} oneOffer={offer} cardClass={cardClass} />)}
-    </div>
-  );
+  if (cardClass === 'near-places') {
+    classes = 'near-places__list places__list';
+
+    return (
+      <section className="near-places places">
+        <h2 className="near-places__title">Other places in the neighbourhood</h2>
+        <div className={classes}>
+          {offers.slice(0, offersNumber).map((offer) => <OfferCard key={offer.id} oneOffer={offer} cardClass={cardClass} />)}
+        </div>
+      </section>
+    );
+
+  } else {
+
+    return (
+      <div className={classes}>
+        {offers.slice(0, offersNumber).map((offer) => <OfferCard key={offer.id} oneOffer={offer} cardClass={cardClass} />)}
+      </div>
+    );
+  }
 }
 
 export default OffersList;
