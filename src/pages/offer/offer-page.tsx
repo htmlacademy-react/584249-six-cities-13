@@ -1,22 +1,44 @@
-import { TypeOfferPage } from '../../types/offer';
 import { useParams } from 'react-router';
+import { useEffect } from 'react';
+import { calculateRating, sortReviews } from '../../utils/utils';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getNearOffers, getOffer, getOfferStatus } from '../../store/offer-slice/offer-slice-selectors';
+import { fetchOfferAction, fetchNearOffersAction, fetchReviewsAction } from '../../store/api-actions';
+import { getReviews } from '../../store/reviews-slice/reviews-slice-selectors';
+
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import ReviewsList from '../../components/reviews/reviews-list';
-import {Review} from '../../types/review';
 import NearPlaces from '../../components/near-places-cards/near-places';
-import { calculateRating } from '../../utils/utils';
+import Loading from '../loading/loading';
 
-type OfferPageProps = {
-  offers: TypeOfferPage[];
-  reviews: Review[];
-  nearPlaces: TypeOfferPage[];
-}
+const MAX_PHOTOS_AMOUNT = 6;
+const MAX_REVIEWS_AMOUNT = 10;
 
-function OfferPage({offers, reviews, nearPlaces}: OfferPageProps):JSX.Element {
+function OfferPage():JSX.Element {
 
-  const params = useParams();
-  const offer = offers.find((el) => el.id === params.id);
+  const dispatch = useAppDispatch();
+
+  const id = Number(useParams().id);
+
+  useEffect(() => {
+    dispatch(fetchOfferAction(id));
+    dispatch(fetchNearOffersAction(id));
+    dispatch(fetchReviewsAction(id));
+  }, [id, dispatch]);
+
+  const offer = useAppSelector(getOffer);
+  const offerStatus = useAppSelector(getOfferStatus);
+  const nearOffers = useAppSelector(getNearOffers);
+  const reviews = useAppSelector(getReviews);
+
+  if (!offer || offerStatus.isLoading) {
+    return <Loading />;
+  }
+
+  const { images, rating, title, type, bedrooms, maxAdults, price, goods, description, isPremium } = offer;
+  const { avatarUrl, isPro, name } = offer.host;
+  const sortedReviews = sortReviews(reviews).slice(0, MAX_REVIEWS_AMOUNT);
 
   return (
     <div className="page">
@@ -26,23 +48,22 @@ function OfferPage({offers, reviews, nearPlaces}: OfferPageProps):JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {offer?.images.map((i) => (
-                <div className="offer__image-wrapper" key={i}>
-                  <img className="offer__image" src={i} alt={offer.title} />
+              {images.slice(0, MAX_PHOTOS_AMOUNT).map((image) => (
+                <div className="offer__image-wrapper" key={image}>
+                  <img className="offer__image" src={image} alt={title} />
                 </div>
               ))}
             </div>
           </div>
-          {offer &&
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {offer.isPremium &&
+              {isPremium &&
               <div className="offer__mark">
                 <span>Premium</span>
               </div>}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  {offer.title}
+                  {title}
                 </h1>
                 <button className='offer__bookmark-button button' type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
@@ -53,59 +74,59 @@ function OfferPage({offers, reviews, nearPlaces}: OfferPageProps):JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: calculateRating(offer.rating)}} />
+                  <span style={{ width: calculateRating(rating)}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">{offer.rating}</span>
+                <span className="offer__rating-value rating__value">{rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {offer.type}
+                  {type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {offer.bedrooms} Bedrooms
+                  {bedrooms} Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {offer.maxAdults} adults
+                  Max {maxAdults} adults
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;{offer.price}</b>
+                <b className="offer__price-value">&euro;{price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {offer.goods.map((item) => (<li className="offer__inside-item" key={item}>{item}</li>))}
+                  {goods.map((item) => (<li className="offer__inside-item" key={item}>{item}</li>))}
                 </ul>
               </div>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
                   <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="offer__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
+                    <img className="offer__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="offer__user-name">
-                    {offer.host.name}
+                    {name}
                   </span>
-                  {offer.host.isPro && <span className="offer__user-status">Pro</span>}
+                  {isPro && <span className="offer__user-status">Pro</span>}
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">
-                    {offer.description}
+                    {description}
                   </p>
                 </div>
               </div>
-              <ReviewsList reviews={reviews}/>
+              <ReviewsList reviews={sortedReviews} id={id} />
             </div>
-          </div>}
+          </div>
           <Map
             className="property__map"
-            offers={offers} selectedOfferId={offer ? offer.id : offers[0].id}
+            offers={[...nearOffers, offer]} selectedOfferId={id}
           />
         </section>
         <div className="container">
-          <NearPlaces nearPlaces={nearPlaces} />
+          <NearPlaces nearPlaces={nearOffers} />
         </div>
       </main>
     </div>

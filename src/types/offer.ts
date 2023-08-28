@@ -1,5 +1,5 @@
 export type OfferCard = {
-  id: string;
+  id: number;
   title: string;
   type: string;
   price: number;
