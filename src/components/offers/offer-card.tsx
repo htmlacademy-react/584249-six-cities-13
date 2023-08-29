@@ -3,7 +3,6 @@ import { TypeOfferPage } from '../../types/offer';
 import { AppRoutes } from '../../const';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-// import { selectOffer } from '../../store/app-slice/app-slice';
 import { useNavigate } from 'react-router-dom';
 import { getIsAuthorized } from '../../store/user-slice/user-slice-selectors';
 import { addToFavoritesAction } from '../../store/api-actions';
