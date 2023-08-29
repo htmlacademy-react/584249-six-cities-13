@@ -1,7 +1,17 @@
+import { useAppSelector } from '../../hooks';
+import { Navigate } from 'react-router-dom';
+import { getIsAuthorized } from '../../store/user-slice/user-slice-selectors';
+import { AppRoutes } from '../../const';
 import LoginForm from '../../components/login-form/login-form';
 import Logo from '../../components/logo/logo';
 
 function LoginPage(): JSX.Element {
+  const isAuth = useAppSelector(getIsAuthorized);
+
+  if (isAuth) {
+    return <Navigate to={AppRoutes.Root} />;
+  }
+
   return (
     <div className="page page--gray page--login">
       <header className="header">
