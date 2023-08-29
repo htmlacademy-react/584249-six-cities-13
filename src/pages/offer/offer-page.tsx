@@ -14,6 +14,7 @@ import Map from '../../components/map/map';
 import ReviewsList from '../../components/reviews/reviews-list';
 import OffersList from '../../components/offers/offers-list';
 import Loading from '../loading/loading';
+import Error from '../../components/error/error';
 
 function OfferPage():JSX.Element {
 
@@ -34,8 +35,12 @@ function OfferPage():JSX.Element {
   const reviews = useAppSelector(getReviews);
   const isAuth = useAppSelector(getIsAuthorized);
 
-  if (!offer || offerStatus.isLoading) {
+  if (offerStatus.isLoading) {
     return <Loading />;
+  }
+
+  if (!offer || offerStatus.isError) {
+    return <Error />;
   }
 
   const { images, rating, title, type, bedrooms, maxAdults, price, goods, description, isPremium, isFavorite } = offer;

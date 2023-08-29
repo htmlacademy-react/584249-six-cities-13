@@ -36,7 +36,7 @@ enum SortOptions {
 
 enum APIRoute {
   Nearby = '/offers',
-  Offers = '/hotels',
+  Offers = '/offers',
   Reviews = '/comments',
   Login = '/login',
   Logout = '/logout',
