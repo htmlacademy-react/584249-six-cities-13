@@ -1,17 +1,9 @@
-const styles = {
-  'loading-spinner': {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-  }
-};
-
-const style = styles['loading-spinner'];
+import style from './loading.module.css';
 
 function LoadingScreen(): JSX.Element {
   return (
     <div className='container'>
-      <p style={style}>Loading ...</p>
+      <p className={style.loading__spinner}>Loading ...</p>
     </div>
   );
 }

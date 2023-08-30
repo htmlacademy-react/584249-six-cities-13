@@ -1,6 +1,6 @@
 import cn from 'classnames';
 
-import OffersList from '../../components/offers/offers-list';
+import OffersList from '../../components/offers-list/offers-list';
 import Header from '../../components/header/header';
 import LocationsList from '../../components/locations/locations-list';
 import Map from '../../components/map/map';
