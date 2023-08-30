@@ -38,6 +38,12 @@ export const oneOfferSlice = createSlice({
         state.nearOffersStatus = FetchStatus.Success;
         state.nearOffers = action.payload;
       })
+      .addCase(fetchNearOffersAction.rejected, (state) => {
+        state.nearOffersStatus = FetchStatus.Failed;
+      })
+      .addCase(fetchNearOffersAction.pending, (state) => {
+        state.nearOffersStatus = FetchStatus.Loading;
+      })
       .addCase(addToFavoritesAction.fulfilled, (state, action) => {
         state.nearOffers.forEach((offer) => {
           if (offer.id === action.payload.id) {

@@ -47,4 +47,16 @@ describe('Favorites slice', () => {
 
     expect(result).toEqual(expectedState);
   });
+
+  it('should set "fetchStatus" to "FetchStatus.Fulfilled"', () => {
+    const fakeOffer = makeFakeOffer();
+
+    const expectedState: FavoritesData = {
+      favorites: [fakeOffer],
+      fetchStatus: FetchStatus.Success,
+    };
+    const result = favoritesSlice.reducer(undefined, fetchFavoritesAction.fulfilled([fakeOffer], '', undefined));
+
+    expect(result).toEqual(expectedState);
+  });
 });
