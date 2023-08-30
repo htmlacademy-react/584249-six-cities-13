@@ -1,6 +1,7 @@
 import { TypeOfferPage } from '../types/offer';
+import { Review } from '../types/review';
 import { UserData } from '../types/user-data';
-import { lorem, finance, datatype, name, system, internet } from 'faker';
+import { lorem, finance, datatype, name, system, internet, date } from 'faker';
 
 export const makeFakeOffer = (): TypeOfferPage => ({
   id: Number(finance.amount(10, 100)),
@@ -43,4 +44,17 @@ export const makeFakeUser = (): UserData => ({
   avatarUrl: system.directoryPath(),
   email: internet.email(),
   token: '',
+});
+
+export const makeFakeReview = (): Review => ({
+  comment: lorem.sentences(4),
+  date: String(date.recent()),
+  id: Number(finance.amount(300, 400)),
+  rating: Number(finance.amount(0, 5)),
+  user: {
+    id: 111,
+    avatarUrl: '',
+    name: name.firstName().concat(' ').concat(name.lastName()),
+    isPro: datatype.boolean(),
+  },
 });

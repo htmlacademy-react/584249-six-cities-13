@@ -4,7 +4,7 @@ import { NameSpace } from '../../const';
 import { Review } from '../../types/review';
 import { FetchStatus } from '../../const';
 
-type InitialState = {
+export type InitialState = {
   reviews: Review[];
   postStatus: FetchStatus;
 };
