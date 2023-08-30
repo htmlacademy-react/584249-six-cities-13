@@ -1,5 +1,6 @@
 import { TypeOfferPage } from '../types/offer';
-import { lorem, finance, datatype, name, system } from 'faker';
+import { UserData } from '../types/user-data';
+import { lorem, finance, datatype, name, system, internet } from 'faker';
 
 export const makeFakeOffer = (): TypeOfferPage => ({
   id: Number(finance.amount(10, 100)),
@@ -33,4 +34,13 @@ export const makeFakeOffer = (): TypeOfferPage => ({
       zoom: Number(finance.amount(5, 10)),
     },
   }
+});
+
+export const makeFakeUser = (): UserData => ({
+  id: Number(finance.amount(300, 400)),
+  name: name.firstName().concat(' ').concat(name.lastName()),
+  isPro: datatype.boolean(),
+  avatarUrl: system.directoryPath(),
+  email: internet.email(),
+  token: '',
 });
