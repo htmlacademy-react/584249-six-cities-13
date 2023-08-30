@@ -1,6 +1,5 @@
-import { AppData } from './app-slice';
 import { Cities, SortOptions } from '../../const';
-import { appSlice, changeCity, changeSort } from './app-slice';
+import { AppData, appSlice, changeCity, changeSort } from './app-slice';
 
 describe('App slice', () => {
 
