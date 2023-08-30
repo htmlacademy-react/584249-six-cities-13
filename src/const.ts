@@ -59,6 +59,4 @@ enum FetchStatus {
   Failed = 'Failed',
 }
 
-const TIMEOUT_SHOW_ERROR = 2000;
-
-export { FetchStatus, NameSpace, Settings, AppRoutes, AuthorizationStatus, SortOptions, APIRoute, TIMEOUT_SHOW_ERROR, Cities };
+export { FetchStatus, NameSpace, Settings, AppRoutes, AuthorizationStatus, SortOptions, APIRoute, Cities };
