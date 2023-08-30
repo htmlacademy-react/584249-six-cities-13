@@ -1,5 +1,6 @@
 import { TypeOfferPage } from '../types/offer';
 import { Review } from '../types/review';
+import { Cities } from '../const';
 
 export function sortOffers(offers: TypeOfferPage[], sortBy: string): TypeOfferPage[] {
   switch (sortBy) {
@@ -22,3 +23,10 @@ export function calculateRating(rating: number):string {
   return String(rating * 20).concat('%');
 }
 
+export function getRandomCity() {
+  const cities = Object.values(Cities);
+  const serialNumber = Math.floor(Math.random() * cities.length);
+  const cityName = cities[serialNumber];
+
+  return Cities[cityName];
+}
