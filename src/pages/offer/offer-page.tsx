@@ -12,7 +12,7 @@ import { AppRoutes, Settings } from '../../const';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import ReviewsList from '../../components/reviews/reviews-list';
-import OffersList from '../../components/offers/offers-list';
+import OffersList from '../../components/offers-list/offers-list';
 import Loading from '../loading/loading';
 import Error from '../../components/error/error';
 

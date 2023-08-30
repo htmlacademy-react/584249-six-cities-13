@@ -1,4 +1,4 @@
-import OfferCard from '../../components/offers/offer-card';
+import OfferCard from '../offers-card/offer-card';
 import { TypeOfferPage } from '../../types/offer';
 
 type OffersListProps = {

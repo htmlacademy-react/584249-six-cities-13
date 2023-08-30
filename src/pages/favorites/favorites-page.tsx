@@ -7,7 +7,7 @@ import { getFavorites, getFavoriteStatus } from '../../store/favorites-slice/fav
 import Header from '../../components/header/header';
 import LoadingScreen from '../loading/loading';
 import Error from '../../components/error/error';
-import OffersList from '../../components/offers/offers-list';
+import OffersList from '../../components/offers-list/offers-list';
 
 type OffersByCity = {
   [cityName: string]: TypeOfferPage[];
